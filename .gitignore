@@ -1,1 +1,34 @@
 output.wav
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C Extensions
+*.so
+*.pyd
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Virtual environments
+myenv/
+venv/
+env/
+ENV/
+
+# IDE / editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Other
+*.log
+*.bak
+*.swp
