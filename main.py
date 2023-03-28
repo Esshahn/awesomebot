@@ -6,12 +6,21 @@ from scipy.io.wavfile import write
 from dotenv import load_dotenv
 
 
+def speak(text):
+    #voice = "-v 'Eddy (Deutsch (Deutschland))'"
+    voice = ""
+    print("\n " + text)
+    os.system("say -r180 "+voice + " " + text)
+
+
 def record_audio(filename="output.wav"):
     fs = 22050  # Sample rate
-    seconds = 6  # Duration of recording
-    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
+    seconds = 5  # Duration of recording
+    myrecording = sd.rec(int(seconds * fs), samplerate=fs,
+                         channels=1)
     print("\nBegin recording...")
-    sd.wait()  # Wait until recording is finished
+    while sd.wait():  # Wait until recording is finished
+        print(".")
     print("End recording")
     write(filename, fs, myrecording)  # Save as WAV file
 
@@ -36,7 +45,6 @@ def query_chatgpt(prompt):
         messages=messages)
     reply = response["choices"][0]["message"]["content"]
     messages.append({"role": "assistant", "content": reply})
-    print("\n" + reply + "\n")
     return reply
 
 
@@ -52,7 +60,7 @@ def main():
     prompt = transcribe_audio(soundfile_name)
     reply = query_chatgpt(prompt)
 
-    os.system("say -r180 " + reply)
+    speak(reply)
 
 
 if __name__ == '__main__':
