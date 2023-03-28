@@ -15,12 +15,16 @@ def speak(text):
 
 def record_audio(filename="output.wav"):
     fs = 22050  # Sample rate
-    seconds = 5  # Duration of recording
+    seconds = 10  # Duration of recording
+
+    print("\nUm eine Frage zu stellen, drücke die Eingabetaste.")
+    print("Drücke die Eingabetaste erneut, um die Frage zu beenden.")
+    input()
+    print("\nBegin recording...")
     myrecording = sd.rec(int(seconds * fs), samplerate=fs,
                          channels=1)
-    print("\nBegin recording...")
-    while sd.wait():  # Wait until recording is finished
-        print(".")
+    input()
+    sd.stop()
     print("End recording")
     write(filename, fs, myrecording)  # Save as WAV file
 
@@ -56,11 +60,11 @@ def main():
 
     print("Hallo ich bin der Awesomebot vom CityLAB Berlin!")
 
-    record_audio(soundfile_name)
-    prompt = transcribe_audio(soundfile_name)
-    reply = query_chatgpt(prompt)
-
-    speak(reply)
+    while True:
+        record_audio(soundfile_name)
+        prompt = transcribe_audio(soundfile_name)
+        reply = query_chatgpt(prompt)
+        speak(reply)
 
 
 if __name__ == '__main__':
